@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Flappy Bird</title>
+        <script type="text/javascript" src="phaser.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+        <style type="text/css">
+        @font-face {
+            src:url('assets/super.ttf');
+            font-family:'super';
+        }
+        @font-face {
+            src:url('assets/logofont.ttf');
+            font-family:'logofont';
+        }
+        canvas {
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -216px;
+            position: absolute;
+            image-rendering: pixelated;
+            border-radius: 12px 25px;
+
+z-index: 90;
+border: 10px solid black;
+        }
+        #glasspane {
+            width:500px;
+            height: 432px;
+            left: 50%;
+            top: 50%;
+            margin-left: -240px;
+            margin-top: -206px;
+            position: absolute;
+            border-radius: 10px 22px;
+
+ background: linear-gradient(rgba(255,255,255,0.2), rgba(0,0,0,0.2));
+ z-index: 100;
+        }
+        aside {
+            width:250px;
+            top: 10%;
+            position: absolute;
+            height: 80%;
+            background: #656164;
+        }
+        aside:first-child{
+        left: 10%;
+    }
+    aside:last-child {
+        right:10;
+    }
+
+        </style>
+    </head>
+
+    <body>
+        <aside class="">
+
+        </aside>
+<div id="glasspane">
+</div>
+<aside class="">
+
+</aside>
+    </body>
+</html>
