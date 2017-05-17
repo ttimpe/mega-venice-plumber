@@ -6,11 +6,11 @@ var menuFont = { font: "16px super", fill: "white" };
 var startLabel;
 var timer = 0;
 //Update functionupdate(){    }
-function printColoredText(x, y, string, size) {
+function printColoredText(x, y, string, size, hOffset) {
     var f = size + "px logofont";
 
     for (var i = 0; i<string.length; i++) {
-        var h = i * 30;
+        var h = (i+hOffset) * 30;
         var fill = "hsl(" + h + ", 100%, 50%)";
         var f1 = {font: f, fill:fill};
         game.add.text(x+(i*(size*0.8)), y, string.charAt(i), f1);
@@ -30,7 +30,10 @@ var startScreen = {
 
         var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.startGame, this);
-        printColoredText(10, 50, "SUPER VENICE PLUMBER", 30);
+        printColoredText(30, 80, "M EGA", 50,4);
+        printColoredText(210, 80, " VENICE", 50,7);
+        printColoredText(30, 130, "PLUM BER", 70,2);
+
 
         this.timer = game.time.create(false);
         this.timer.loop(300, this.updateTime, this);
