@@ -3,8 +3,10 @@
     <head>
         <meta charset="utf-8" />
         <title>Flappy Bird</title>
-        <script type="text/javascript" src="phaser.min.js"></script>
-        <script type="text/javascript" src="app.js"></script>
+        <link rel="preload" href="assets/super.ttf" as="font" type="font/ttf" crossorigin>
+        <link rel="preload" href="assets/logofont.ttf" as="font" type="font/ttf" crossorigin>
+        <link rel="preload" href="assets/tv.ttf" as="font" type="font/ttf" crossorigin>
+
         <style type="text/css">
         @font-face {
             src:url('assets/super.ttf');
@@ -14,56 +16,100 @@
             src:url('assets/logofont.ttf');
             font-family:'logofont';
         }
-        canvas {
-            left: 50%;
-            top: 50%;
-            margin-left: -250px;
-            margin-top: -216px;
+        @font-face {
+            src:url('assets/tv.ttf');
+            font-family:'tv';
+        }
+        main {
+            background: linear-gradient(#444, #333);
+            height: 662px;
+            width: 600px;
+            position: relative;
+            border-radius: 10px;
+box-shadow: 5px 5px 10px #000;
+border: 2px solid #111;
+        }
+        footer {
             position: absolute;
+            width:    100%;
+            height: 90px;
+            bottom:0;
+    background: #212121;
+    border-radius: 10px;
+
+        }
+        h1 {
+            font-family: 'tv';
+            font-size: 30px;
+            color: white;
+            text-align: center;
+            position: absolute;
+            bottom: 100px;
+            width: 100%;
+        }
+        canvas {
             image-rendering: pixelated;
             border-radius: 12px 25px;
-
+position: absolute;
+left: 40px;
+top:40px;
 z-index: 90;
 border: 10px solid black;
         }
         #glasspane {
             width:500px;
             height: 432px;
-            left: 50%;
-            top: 50%;
-            margin-left: -240px;
-            margin-top: -206px;
-            position: absolute;
             border-radius: 10px 22px;
-
+position: absolute;
+top:50px;
+left: 50px;
  background: linear-gradient(rgba(255,255,255,0.2), rgba(0,0,0,0.2));
  z-index: 100;
         }
+        #player {
+            width:500px;
+            height: 432px;
+            border-radius: 10px 22px;
+position: absolute;
+top:10px;
+left: 160px;
+ z-index: 90;
+        }
         aside {
-            width:250px;
-            top: 10%;
+            width:150px;
+            margin-left: 0;
+            height: 100%;
             position: absolute;
-            height: 80%;
+            left:0;
+            top:0;
             background: #656164;
         }
-        aside:first-child{
-        left: 10%;
-    }
-    aside:last-child {
-        right:10;
-    }
 
+    aside:last-child {
+    right:0;
+    left: auto;
+    }
+#noise {
+    width: 500px;
+    height: 432px;
+}
         </style>
     </head>
 
     <body>
-        <aside class="">
+        <main>
+        <div id="glasspane">
+        </div>
+        <canvas id="noise">
+        </canvas>
+        <video id="player"></video>
+        <div id="game"></div>
+        <h1>TOBI</h1>
 
-        </aside>
-<div id="glasspane">
-</div>
-<aside class="">
-
-</aside>
+        <footer>
+        </footer>
+    </main>
+        <script type="text/javascript" src="phaser.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
     </body>
 </html>

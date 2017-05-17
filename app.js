@@ -1,14 +1,50 @@
+var game = null;
+
 var timeFont = { font: "14px super", fill: "yellow" };
-var titleFont = {font: "30px logofont", fill:"white"};
+
+var menuFont = { font: "16px super", fill: "white" };
+var startLabel;
+var timer = 0;
+//Update functionupdate(){    }
+function printColoredText(x, y, string, size) {
+    var f = size + "px logofont";
+
+    for (var i = 0; i<string.length; i++) {
+        var h = i * 30;
+        var fill = "hsl(" + h + ", 100%, 50%)";
+        var f1 = {font: f, fill:fill};
+        game.add.text(x+(i*(size*0.8)), y, string.charAt(i), f1);
+    }
+}
+
 var startScreen = {
     preload: function() {
 
     },
     create: function() {
-        this.logoLabel = this.game.add.text(50, 50, "MEGA VENICE PLUMBER", titleFont);
+        startLabel = game.add.text(175, 300, "PRESS SPACE", menuFont);
+
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
+
+        var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.startGame, this);
+        printColoredText(10, 50, "SUPER VENICE PLUMBER", 30);
+
+        this.timer = game.time.create(false);
+        this.timer.loop(300, this.updateTime, this);
+
+
     },
     update: function() {
-
+        timer += game.time.elapsed; //this is in ms, not seconds.
+        if ( timer >= 500 )    {        timer -= 500;        startLabel.visible = !startLabel.visible;    }
+    },
+    updateTime: function() {
+    },
+    startGame: function() {
+        game.state.start('main');
     }
 };
 
@@ -59,6 +95,7 @@ var mainState = {
         // Create an empty group
         this.objects = game.add.group();
         this.addRowOfPipes();
+
         //this.game.world.setBounds(500 + this.ramio.position.x, 432 + this.ramio.position.y, 500*2, 432*2);
         this.timeLeft = 180;
         this.label_time = this.game.add.text(350, 20, this.timeLeft, timeFont);
@@ -159,7 +196,11 @@ this.objects.subAll('body.velocity', 2000, true, true);
 
     }
 };
-var game = new Phaser.Game(500, 432);
+
+
+
+function startGame() {
+game = new Phaser.Game(500, 432, Phaser.AUTO, 'game');
 
 // Add the 'mainState' and call it 'main'
 game.state.add('startScreen', startScreen);
@@ -167,4 +208,63 @@ game.state.add('startScreen', startScreen);
 game.state.add('main', mainState);
 
 // Start the state to actually start the game
-game.state.start('main');
+game.state.start('startScreen');
+}
+
+var n = document.getElementById('noise');
+var ctx = n.getContext('2d');
+var noiseInterval;
+var noiseOsc;
+function startNoise() {
+
+    noiseInterval = setInterval(setNoise, 1000/50);
+    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    var bufferSize = 2 * audioContext.sampleRate,
+        noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate),
+        output = noiseBuffer.getChannelData(0);
+    for (var i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+    }
+
+    noiseOsc = audioContext.createBufferSource();
+    noiseOsc.buffer = noiseBuffer;
+    noiseOsc.loop = true;
+    noiseOsc.start(0);
+
+    noiseOsc.connect(audioContext.destination);
+}
+function stopNoise() {
+    noiseOsc.stop();
+    clearInterval(noiseInterval);
+    n.style.display = 'noise';
+}
+function switchToGame() {
+    stopNoise();
+    startGame();
+}
+function setNoise() {
+    document.body.onkeyup = function(e){
+        if(e.keyCode == 32){
+            stopNoise();
+            startGame();
+            document.body.onkeyup = null;
+        }
+    }
+    var id = ctx.createImageData(500,432); // only do this once per page
+    var data = id.data;
+    for (var i=0; i<data.length; i += 4) {
+        var l = Math.floor(Math.random() * 255);
+        data[i] = l;
+        data[i+1] = l;
+        data[i+2] = l;
+        data[i+3] = 255;
+
+    }
+    ctx.putImageData(id, 0, 0);
+
+}
+function playStream(url) {
+    document.getElementById('player').src = url;
+}
+startNoise();
